@@ -51,3 +51,47 @@ const friends = [
 ];
 const friendsCt = document.querySelector('#friends');
 const filters = document.querySelectorAll('#filter>button');
+
+document.querySelector('#all').addEventListener('click', filter);
+document.querySelector('#u30').addEventListener('click', filter);
+document.querySelector('#soccer').addEventListener('click', filter);
+
+showFriends(friends); // wir rufen die Funktion showFriends auf und übergeben das Array friends
+
+function filter(event) {
+    console.log('Es wurde auf diesen Filter geklickt:', event.target.id);
+
+    let filter = event.target.id;   // filter ist der Wert des geklickten Filters
+
+    if (filter === 'u30') { // wenn der Filter u30 ist
+        let u30 = friends.filter(friend => {    // .filter() erstellt ein neues Array mit allen Elementen, die den Filterbedingungen entsprechen
+            return friend.alter < 30;   // wir filtern alle Freunde, die jünger als 30 sind
+        })
+        console.log(u30);   // wir loggen das gefilterte Array
+        showFriends(u30);
+    }
+
+    else if (filter == 'soccer') {
+        let soccer = friends.filter(friend => {
+            return friend.hobbies.includes('Fussball');
+        })
+        console.log(soccer);
+        showFriends(soccer);
+    }
+
+    else if (filter == 'all') {
+        console.log(friends);
+        showFriends(friends);
+    }
+}
+
+function showFriends (inputfriends){
+    friendsCt.innerHTML = ''; // wir leeren den Container, damit wir nicht immer wieder die gleichen Freunde anhängen
+    inputfriends.forEach(friend => {
+        console.log(friend.name);
+
+        const item = document.createElement('p');
+        item.innerText = friend.name;
+        friendsCt.appendChild(item);
+    });
+}
